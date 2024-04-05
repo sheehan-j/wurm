@@ -1,0 +1,158 @@
+class Sandworm {
+  Board board;
+  GameController gc;
+  ArrayList<Body> body;
+  float speed;
+  int dir = 1; // 0 up, 1 right, 2 down, 3 left (represents dir of the head)
+  
+  int add = 0; // "Queue" for adding body parTs
+  ArrayList<DirChange> dirQueue; // Queue for direction changes
+
+  Sandworm(Board board_, GameController gc_) {
+    body = new ArrayList<Body>();
+    dirQueue = new ArrayList<DirChange>();
+    board = board_;
+    gc = gc_;
+    
+    speed = board.getBoxSizeX() / (frameRate/3);
+    
+    body.add(
+      new Body(
+        board.getXPos() - (board.getBoxSizeX()/2) + board.getBoxSizeX() * 5,
+        board.getYPos() - (board.getBoxSizeY()/2) + board.getBoxSizeY() * 8,
+        speed, 
+        0
+      )
+    );
+    body.add(
+      new Body(
+        board.getXPos() - (board.getBoxSizeX()/2) + board.getBoxSizeX() * 4,
+        board.getYPos() - (board.getBoxSizeY()/2) + board.getBoxSizeY() * 8,
+        speed,
+        0
+      )
+    );
+  }
+
+  void display() {
+    fill(200, 0, 0);
+    for (int i = 0; i < body.size(); i++) {
+      fill(255);
+      ellipse(body.get(i).x, body.get(i).y, 10, 10);
+    }
+    fill(0, 200, 0);
+  }
+
+  void move() {   
+    // Increment the position of all body parts
+    for (int i = 0; i < body.size(); i++) {
+      Body curr = body.get(i);
+      curr.x += curr.dx;
+      curr.y += curr.dy;
+    }
+    
+    // Check if the box square size divided by speed divides into the frameCount
+    // If so, the snake is aligned with the center of a box
+    if (frameCount % (board.getBoxSizeX()/speed) == 0) {
+      
+      int recentIndex = -1;
+      for (int i = 0; i < dirQueue.size(); i++) {
+          if (dirQueue.get(i).index != recentIndex) {
+            body.get(dirQueue.get(i).index).dx = dirQueue.get(i).dx;
+            body.get(dirQueue.get(i).index).dy = dirQueue.get(i).dy;
+            
+            recentIndex = dirQueue.get(i).index;
+            dirQueue.get(i).index += 1;
+          }
+      }
+      
+      for (int i = 0; i < dirQueue.size(); i++) {
+         if (dirQueue.get(i).index == body.size()) {
+            dirQueue.remove(i);
+            i--;
+         }
+      }
+      
+      // Add a body piece if necessary
+      if (add > 0) {
+        this.add();
+        add -= 1;
+      }
+    }
+  }
+ 
+ void queueAdd() {
+   add += 1;
+ }
+
+ void add() {
+    Body last = body.get(body.size()-1);
+    
+    Body newBody;
+    newBody = new Body(
+      last.x + ((board.getBoxSizeX()/speed) * last.dx * -1), 
+      last.y + ((board.getBoxSizeY()/speed) * last.dy * -1),
+      last.dx,
+      last.dy
+    );
+
+    body.add(newBody);
+  }
+  
+  void queueDir(int newDir) {
+    boolean invalidDirChange = newDir == 0 && (dir == 0 || dir == 2);
+    invalidDirChange = invalidDirChange || (newDir == 2 && (dir == 0 || dir == 2));
+    invalidDirChange = invalidDirChange || (newDir == 1 && (dir == 1 || dir == 3));
+    invalidDirChange = invalidDirChange || (newDir == 3 && (dir == 1 || dir == 3));
+    
+    if (invalidDirChange) return;
+      
+    dir = newDir;
+    float newDx, newDy;
+    if (dir == 0) {
+       newDx = 0;
+       newDy = -speed;
+    } else if (dir == 1) {
+       newDx = speed;
+       newDy = 0;
+    } else if (dir == 2) {
+      newDx = 0;
+      newDy = speed;
+    } else {
+      newDx = -speed;
+      newDy = 0;
+    }
+    
+    dirQueue.add(new DirChange(0, newDx, newDy));
+  }
+
+  void changeDirUp() {
+    dir = 0;
+    body.get(0).dx = 0;
+    body.get(0).dy = -speed;
+  }
+
+  void changeDirLeft() {
+      dir = 3;
+      body.get(0).dx = -speed;
+      body.get(0).dy = 0;
+  }
+
+  void changeDirRight() {
+      dir = 1;
+      body.get(0).dx = speed;
+      body.get(0).dy = 0;
+  }
+
+  void changeDirDown() {
+      dir = 2;
+      body.get(0).dx = 0;
+      body.get(0).dy = speed;
+  }
+
+  //void checkCollision() {
+  //   if(head.x < board.getLeftBound() || head.x > board.getRightBound() || head.y > board.getTop() || head.y < board.getBottom()){
+  //     gc.endGame(0);
+  //   }
+  //}
+}
