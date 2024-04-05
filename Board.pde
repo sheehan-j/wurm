@@ -1,36 +1,30 @@
 class Board {
-  int numX;
-  int numY;
-  int size;
-  int xPos;
-  int yPos;
+  int size, numOfBoxes, xPos, yPos;
+  private int boxSize = 30;
 
-  Board( int xPos_, int yPos_, int size_, int numX_, int numY_) {
-    numX = numX_;
-    numY = numY_;
-    size = size_;
-    xPos = xPos_;
-    yPos = yPos_;
+  Board( int xPos, int yPos, int numOfBoxes) {
+    this.xPos = xPos;
+    this.yPos = yPos;
+    this.numOfBoxes = numOfBoxes;
+    size = boxSize * numOfBoxes;
   }
 
   void display() {
+    fill(255, 0, 0);
+    
     strokeWeight(1);
-
-    for (int i = 0; i<= numX; i++) {
-      line(xPos + (i*(size/numY)), yPos, xPos + (i*(size/numY)), yPos + size);
+    
+    for (int i = 0; i<= numOfBoxes; i++) {
+      line(xPos + (i*boxSize), yPos, xPos + (i*boxSize), yPos + size);
     }
 
-    for (int j = 0; j<= numY; j++) {
-      line(xPos, yPos + (j*(size/numY)), xPos + size, yPos + (j*(size/numY)));
+    for (int j = 0; j <= numOfBoxes; j++) {
+      line(xPos, yPos + (j*boxSize), xPos + size, yPos + (j*boxSize));
     }
   }
   
-  int getBoxSizeX(){
-    return size/numX;
-  }
-  
-  int getBoxSizeY(){
-    return size/numX;
+  int getBoxSize() {
+    return boxSize;
   }
   
   int getXPos(){
@@ -41,16 +35,19 @@ class Board {
     return yPos;
   }
   
-  int getTop(){
+  float getTopBound(){
     return yPos;
   }
-  int getBottom(){
+  
+  float getBottomBound(){
     return yPos + size;
   }
-  int getLeftBound(){
+  
+  float getLeftBound(){
     return xPos;
   }
-  int getRightBound(){
+  
+  float getRightBound(){
     return xPos + size;
   }
 }
