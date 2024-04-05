@@ -1,9 +1,11 @@
 class GameController {
   
-  boolean gameActive = true;
+  boolean gameActive;
+  Integer win;
   
    GameController(){
-     
+     gameActive = true;
+     win = null;
    }
    
    void startGame(){
@@ -16,6 +18,14 @@ class GameController {
    
    void endGame(int win) { 
     gameActive = false;
+    this.win = win;
+    time.stopTime();
+  }
+  
+  void display() {
+    if (!gameActive) {  
+      fill(255);
+    rectMode(CENTER);
     rect(width/2, height/2, width/2, height/2);
     textAlign(CENTER);
     textSize(48); 
@@ -31,5 +41,6 @@ class GameController {
       print("Problem");
     }
     fill(255);
+    }
   }
 }
