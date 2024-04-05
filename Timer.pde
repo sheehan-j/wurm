@@ -54,6 +54,7 @@ class Timer {
   }
   void display(float x, float y)
   {
+    fill(255);
      textFont(arial);
      textSize(48);
      textAlign(CENTER);

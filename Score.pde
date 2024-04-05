@@ -20,6 +20,7 @@ class Score {
    }
    
    void display() {
+     fill(255);
      textFont(arial);
      textSize(48);
      textAlign(RIGHT, TOP);
