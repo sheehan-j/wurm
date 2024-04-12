@@ -7,10 +7,10 @@ class GameController {
    }
    
    void startGame(){
-     
+     gameState = GameState.PLAYING;
    }
    
-   void StartGame2P(){
+   void startGame2P(){
      
    }
    
@@ -42,6 +42,9 @@ class GameController {
   
   void displayStartMenu() {
     image(background, 0, 0);
+    image(titleText, 20, height-180);
+    button1P.display();
+    button2P.display();
   }
   
   void displayGame() {
@@ -78,4 +81,25 @@ class GameController {
 
 enum GameState {
   START_MENU, PLAYING, WIN, LOSS, P1_WIN, P2_WIN;
+}
+
+class Button {
+  int buttonWidth, buttonHeight, x, y;
+  PImage buttonImage;
+   
+   Button(PImage buttonImage, int buttonWidth, int buttonHeight, int x, int y) {
+     this.buttonImage = buttonImage;
+     this.buttonWidth = buttonWidth;
+     this.buttonHeight = buttonHeight;
+     this.x = x;
+     this.y = y;
+   }
+   
+   void display() {
+     image(buttonImage, x, y, buttonWidth, buttonHeight);
+   }
+   
+   boolean checkPressed() {
+      return mouseX > x && mouseX < x+buttonWidth && mouseY > y && mouseY < y + buttonHeight; 
+   }
 }

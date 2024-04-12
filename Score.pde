@@ -1,10 +1,8 @@
 class Score {
    private int score;
-   PFont arial;
   
    Score() {
      score = 0;
-     arial = loadFont("Arial-BoldMT-48.vlw");
    }
    
    int getScore() {

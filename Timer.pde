@@ -3,21 +3,17 @@ class Timer {
   private int start;
   private int lastStop;
   private boolean running = false;
-  PFont arial;
 
   Timer() {
     time = 120;
-    arial = loadFont("Arial-BoldMT-48.vlw");
   }
   
   Timer(int time_) {
     time = time_;
-    arial = loadFont("Arial-BoldMT-48.vlw");
   }
   
   Timer(int minutes, int seconds) {
     time = (minutes *60) + seconds;
-    arial = loadFont("Arial-BoldMT-48.vlw");
   }
 
   int getTime() {
