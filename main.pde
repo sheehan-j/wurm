@@ -11,9 +11,11 @@ PImage background, image1P, image2P, titleText, sand;
 PImage headLeft, headRight, headUp, headDown;
 PImage bodyLeft, bodyRight, bodyUp, bodyDown;
 PImage tailLeft, tailRight, tailUp, tailDown;
+PImage harvesterImage;
 PFont arial;
 Button button1P, button2P;
-SoundFile bkg_music;
+SoundFile bkgMusic;
+SoundFile wormEat;
 
 void setup() {
   size(850, 600);
@@ -47,13 +49,16 @@ void setup() {
   tailDown = loadImage("wormtaildown.png");
   tailRight = loadImage("wormtailright.png");
   
+  harvesterImage = loadImage("harvester.png");
+  
   button1P = new Button(image1P, 150, 150, width-320, 40);
   button2P = new Button(image2P, 150, 150, width-170, 40);
   
   arial = loadFont("Arial-BoldMT-48.vlw");
   
-  bkg_music = new SoundFile(this, "desert_background_music.mp3");
-  bkg_music.loop();
+  wormEat = new SoundFile(this, "wormeat.mp3");
+  bkgMusic = new SoundFile(this, "desert_background_music.mp3");
+  bkgMusic.loop();
 }
 
 void draw() {

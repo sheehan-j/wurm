@@ -145,7 +145,6 @@ class Sandworm {
   }
 
   void checkCollision() {
-    print("check");
     Body head = body.get(0);
 
     //check edges
@@ -169,6 +168,7 @@ class Sandworm {
     if (head.x > harvester.getBound("left") && head.x < harvester.getBound("right") && head.y < harvester.getBound("bottom") && head.y > harvester.getBound("top")) {
       this.add();
       score.increase();
+      wormEat.play();
       harvester.generate();
     }
   }

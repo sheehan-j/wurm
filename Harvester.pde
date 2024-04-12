@@ -16,6 +16,8 @@ class Harvester {
   void display() {
     fill(255, 234, 0);
     ellipse(x, y, 10, 10);
+    imageMode(CENTER);
+    image(harvesterImage, x, y, board.getBoxSize()-4, board.getBoxSize()-4);
   }
   
   // Check for the sandworm's vicinity and move accordingly
