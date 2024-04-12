@@ -1,12 +1,18 @@
 class Board {
   int size, numOfBoxes, xPos, yPos;
-  private int boxSize = 30;
+  private int boxSize = 36;
 
-  Board( int xPos, int yPos, int numOfBoxes) {
-    this.xPos = xPos;
-    this.yPos = yPos;
+  Board(int xPos, int yPos, int numOfBoxes) {
     this.numOfBoxes = numOfBoxes;
     size = boxSize * numOfBoxes;
+    
+    if (xPos == -1) {
+       this.xPos = (int) (width/2 - size/2);
+       this.yPos = (int) (height/2 - size/2);
+    } else {
+      this.xPos = xPos;
+      this.yPos = yPos;
+    }
   }
 
   void display() {
@@ -14,12 +20,18 @@ class Board {
     
     strokeWeight(1);
     
-    for (int i = 0; i<= numOfBoxes; i++) {
-      line(xPos + (i*boxSize), yPos, xPos + (i*boxSize), yPos + size);
-    }
+    //for (int i = 0; i<= numOfBoxes; i++) {
+    //  line(xPos + (i*boxSize), yPos, xPos + (i*boxSize), yPos + size);
+    //}
 
-    for (int j = 0; j <= numOfBoxes; j++) {
-      line(xPos, yPos + (j*boxSize), xPos + size, yPos + (j*boxSize));
+    //for (int j = 0; j <= numOfBoxes; j++) {
+    //  line(xPos, yPos + (j*boxSize), xPos + size, yPos + (j*boxSize));
+    //}
+    
+    for (int i = 0; i < numOfBoxes; i++) {
+      for (int j = 0; j < numOfBoxes; j++) {
+        image(sand, xPos + (j*boxSize), yPos+(i*boxSize), boxSize, boxSize);
+      }
     }
   }
   

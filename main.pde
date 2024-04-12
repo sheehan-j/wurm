@@ -7,7 +7,7 @@ Sandworm wurm;
 GameController gc;
 Harvester harvester;
 
-PImage background, image1P, image2P, titleText;
+PImage background, image1P, image2P, titleText, sand;
 PFont arial;
 Button button1P, button2P;
 SoundFile bkg_music;
@@ -19,7 +19,7 @@ void setup() {
   time = new Timer(2, 0);
   time.startTime();
   gc = new GameController();
-  board = new Board(width/2, height/2, 15);
+  board = new Board(-1, -1, 15);
   wurm = new Sandworm();
   harvester = new Harvester();
   
@@ -27,21 +27,22 @@ void setup() {
   image1P = loadImage("1pbutton.png");
   image2P = loadImage("2pbutton.png");
   titleText = loadImage("titletext.png");
+  sand = loadImage("sand.png");
   
   button1P = new Button(image1P, 150, 150, width-320, 40);
   button2P = new Button(image2P, 150, 150, width-170, 40);
   
   arial = loadFont("Arial-BoldMT-48.vlw");
   
-  bkg_music = new SoundFile(this, "desert_background_music.mp3");
-  bkg_music.loop();
+  //bkg_music = new SoundFile(this, "desert_background_music.mp3");
+  //bkg_music.loop();
 }
 
 void draw() {
   gc.display();
 }
 
-void mouseClicked() {
+void mousePressed() {
   if (gc.gameState == GameState.START_MENU) {
     if (button1P.checkPressed()) {
       gc.startGame();
