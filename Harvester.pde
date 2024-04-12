@@ -7,10 +7,11 @@ class Harvester {
   }
   
   void generate() {
+    
     int rand = int(random(board.numOfBoxes)) + 1;
     x = board.getXPos() - (board.getBoxSize()/2) + board.getBoxSize() * rand;
     rand = int(random(board.numOfBoxes)) + 1;
-   y = board.getYPos() - (board.getBoxSize()/2) + board.getBoxSize() * rand;
+    y = board.getYPos() - (board.getBoxSize()/2) + board.getBoxSize() * rand;
   }
   
   void display() {
