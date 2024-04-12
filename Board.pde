@@ -1,5 +1,6 @@
 class Board {
-  int size, numOfBoxes, xPos, yPos;
+  int size, numOfBoxes;
+  float xPos, yPos;
   private int boxSize = 36;
 
   Board(int xPos, int yPos, int numOfBoxes) {
@@ -7,8 +8,8 @@ class Board {
     size = boxSize * numOfBoxes;
     
     if (xPos == -1) {
-       this.xPos = (int) (width/2 - size/2);
-       this.yPos = (int) (height/2 - size/2);
+       this.xPos = width/2 - size/2;
+       this.yPos = height/2 - size/2;
     } else {
       this.xPos = xPos;
       this.yPos = yPos;
@@ -28,6 +29,7 @@ class Board {
     //  line(xPos, yPos + (j*boxSize), xPos + size, yPos + (j*boxSize));
     //}
     
+    imageMode(CORNER);
     for (int i = 0; i < numOfBoxes; i++) {
       for (int j = 0; j < numOfBoxes; j++) {
         image(sand, xPos + (j*boxSize), yPos+(i*boxSize), boxSize, boxSize);
@@ -39,11 +41,11 @@ class Board {
     return boxSize;
   }
   
-  int getXPos(){
+  float getXPos(){
     return xPos;
   }
   
-  int getYPos(){
+  float getYPos(){
     return yPos;
   }
   

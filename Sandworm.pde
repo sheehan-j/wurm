@@ -38,20 +38,25 @@ class Sandworm {
     // Stroke settings
     strokeWeight(1);
     stroke(0);
+    imageMode(CENTER);
+
+    int imageSize = board.getBoxSize();
 
     // Draw head
     fill(200, 0, 0);
-    ellipse(body.get(0).x, body.get(0).y, 10, 10);
+    image(getWormImage("head", body.get(0).dx, body.get(0).dy), body.get(0).x, body.get(0).y, imageSize, imageSize);
+    resetMatrix();
+    
 
     // Draw body
     for (int i = 1; i < body.size()-1; i++) {
       fill(255);
-      ellipse(body.get(i).x, body.get(i).y, 10, 10);
+      image(getWormImage("body", body.get(i).dx, body.get(i).dy), body.get(i).x, body.get(i).y, imageSize, imageSize);
     }
 
     // Draw tail
     fill(0, 200, 0);
-    ellipse(body.get(body.size()-1).x, body.get(body.size()-1).y, 10, 10);
+    image(getWormImage("tail", body.get(body.size()-1).dx, body.get(body.size()-1).dy), body.get(body.size()-1).x, body.get(body.size()-1).y, imageSize, imageSize);
   }
 
   void update() {
@@ -140,15 +145,22 @@ class Sandworm {
   }
 
   void checkCollision() {
+    print("check");
     Body head = body.get(0);
 
     //check edges
-    if (head.x < board.getLeftBound() || head.x > board.getRightBound() || head.y < board.getTopBound() || head.y > board.getBottomBound()) {
+    if (head.getLeftBound() < board.getLeftBound() || 
+      head.getRightBound() > board.getRightBound() || 
+      head.getTopBound() < board.getTopBound() || 
+      head.getBottomBound() > board.getBottomBound()) {
       gc.endGame(GameState.LOSS);
     }
     //check body
     for (int i = 1; i < body.size(); i++) {
-      if (head.x == body.get(i).x && head.y == body.get(i).y) {
+      if (head.x < body.get(i).getRightBound() && 
+        head.x > body.get(i).getLeftBound() && 
+        head.y < body.get(i).getBottomBound() && 
+        head.y > body.get(i).getTopBound()) {
         gc.endGame(GameState.LOSS);
       }
     }
@@ -159,6 +171,28 @@ class Sandworm {
       score.increase();
       harvester.generate();
     }
+  }
+  
+  PImage getWormImage(String bodyPart, float dx, float dy) {
+     if (dx < 0) {
+       if (bodyPart == "head") return headLeft;
+       else if (bodyPart == "body") return bodyLeft;
+       else if (bodyPart == "tail") return tailLeft;
+     } else if (dx > 0) {
+       if (bodyPart == "head") return headRight;
+       else if (bodyPart == "body") return bodyRight;
+       else if (bodyPart == "tail") return tailRight;
+     } else if (dy > 0) {
+       if (bodyPart == "head") return headDown;
+       else if (bodyPart == "body") return bodyDown;
+       else if (bodyPart == "tail") return tailDown;
+     } else {
+       if (bodyPart == "head") return headUp;
+       else if (bodyPart == "body") return bodyUp;
+       else if (bodyPart == "tail") return tailUp;
+     }
+     
+     return null;
   }
 }
 
@@ -181,5 +215,21 @@ class Body {
     this.y = y;
     this.dx = dx;
     this.dy = dy;
+  }
+  
+  float getTopBound() {
+     return y - (board.getBoxSize()/2 - 5); 
+  }
+  
+  float getBottomBound() {
+     return y + (board.getBoxSize()/2 - 5); 
+  }
+  
+  float getLeftBound() {
+    return x - (board.getBoxSize()/2 - 5); 
+  }
+  
+  float getRightBound() {
+    return x + (board.getBoxSize()/2 - 5);
   }
 }

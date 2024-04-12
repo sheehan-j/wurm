@@ -8,6 +8,9 @@ GameController gc;
 Harvester harvester;
 
 PImage background, image1P, image2P, titleText, sand;
+PImage headLeft, headRight, headUp, headDown;
+PImage bodyLeft, bodyRight, bodyUp, bodyDown;
+PImage tailLeft, tailRight, tailUp, tailDown;
 PFont arial;
 Button button1P, button2P;
 SoundFile bkg_music;
@@ -29,13 +32,28 @@ void setup() {
   titleText = loadImage("titletext.png");
   sand = loadImage("sand.png");
   
+  headUp = loadImage("wormheadup.png");
+  headLeft = loadImage("wormheadleft.png");
+  headDown = loadImage("wormheaddown.png");
+  headRight = loadImage("wormheadright.png");
+
+  bodyUp = loadImage("wormbodyup.png");
+  bodyLeft = loadImage("wormbodyleft.png");
+  bodyDown = loadImage("wormbodydown.png");
+  bodyRight = loadImage("wormbodyright.png");
+  
+  tailUp = loadImage("wormtailup.png");
+  tailLeft = loadImage("wormtailleft.png");
+  tailDown = loadImage("wormtaildown.png");
+  tailRight = loadImage("wormtailright.png");
+  
   button1P = new Button(image1P, 150, 150, width-320, 40);
   button2P = new Button(image2P, 150, 150, width-170, 40);
   
   arial = loadFont("Arial-BoldMT-48.vlw");
   
-  //bkg_music = new SoundFile(this, "desert_background_music.mp3");
-  //bkg_music.loop();
+  bkg_music = new SoundFile(this, "desert_background_music.mp3");
+  bkg_music.loop();
 }
 
 void draw() {
