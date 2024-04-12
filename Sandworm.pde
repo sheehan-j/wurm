@@ -144,12 +144,12 @@ class Sandworm {
 
     //check edges
     if (head.x < board.getLeftBound() || head.x > board.getRightBound() || head.y < board.getTopBound() || head.y > board.getBottomBound()) {
-      gc.endGame(0);
+      gc.endGame(GameState.LOSS);
     }
     //check body
     for (int i = 1; i < body.size()-1; i++) {
       if (head.x == body.get(i).x && head.y == body.get(i).y) {
-        gc.endGame(0);
+        gc.endGame(GameState.LOSS);
       }
     }
 

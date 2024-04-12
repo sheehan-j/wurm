@@ -17,23 +17,7 @@ void setup() {
 }
 
 void draw() {
-  background(200);
-  score.display();
-  time.display(width/2, 50);
-  board.display();
-  wurm.display();
-  harvester.display();
-  
-  if (gc.gameActive) {
-    wurm.update();
-    wurm.checkCollision();
-  }
-  
   gc.display();
-}
-
-void checkGame(){
-  
 }
 
 void keyPressed() {
