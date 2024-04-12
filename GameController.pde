@@ -1,6 +1,7 @@
 class GameController {
   
   GameState gameState;
+  int startFrame;
   
    GameController(){
      gameState = GameState.START_MENU;
@@ -8,6 +9,7 @@ class GameController {
    
    void startGame(){
      gameState = GameState.PLAYING;
+     startFrame = frameCount;
    }
    
    void startGame2P(){

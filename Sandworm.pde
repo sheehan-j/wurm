@@ -64,7 +64,7 @@ class Sandworm {
 
     // Check if the box square size divided by speed divides into the frameCount
     // If so, the snake is aligned with the center of a box
-    if (frameCount % (board.getBoxSize()/speed) == 0) {
+    if ((frameCount - gc.startFrame) % (board.getBoxSize()/speed) == 0) {
       int recentIndex = -1;
       for (int i = 0; i < dirQueue.size(); i++) {
         DirChange currDir = dirQueue.get(i);
