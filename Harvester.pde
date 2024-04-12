@@ -2,16 +2,21 @@ class Harvester {
   float x, y; // Position on screen
   int speed = 5; // Speed that the harvester will move if the gamemode is appropriate
   
-  Harvester() {
-    this.generate();
+  Harvester(Sandworm wurm) {
+    this.generate(wurm);
   }
   
-  void generate() {
+  void generate(Sandworm wurm) {
+    boolean inWurm = true;
+    while(inWurm){
+      int rand = int(random(board.numOfBoxes)) + 1;
+      x = board.getXPos() - (board.getBoxSize()/2) + board.getBoxSize() * rand;
+      rand = int(random(board.numOfBoxes)) + 1;
+      y = board.getYPos() - (board.getBoxSize()/2) + board.getBoxSize() * rand;
+      
+      
+    }
     
-    int rand = int(random(board.numOfBoxes)) + 1;
-    x = board.getXPos() - (board.getBoxSize()/2) + board.getBoxSize() * rand;
-    rand = int(random(board.numOfBoxes)) + 1;
-    y = board.getYPos() - (board.getBoxSize()/2) + board.getBoxSize() * rand;
   }
   
   void display() {

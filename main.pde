@@ -26,7 +26,7 @@ void setup() {
   gc = new GameController();
   board = new Board(-1, -1, 15);
   wurm = new Sandworm();
-  harvester = new Harvester();
+  harvester = new Harvester(wurm);
   
   background = loadImage("background.png");
   image1P = loadImage("1pbutton.png");

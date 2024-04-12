@@ -169,7 +169,7 @@ class Sandworm {
       this.add();
       score.increase();
       wormEat.play();
-      harvester.generate();
+      harvester.generate(this);
     }
   }
   
