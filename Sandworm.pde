@@ -147,7 +147,7 @@ class Sandworm {
       gc.endGame(GameState.LOSS);
     }
     //check body
-    for (int i = 1; i < body.size()-1; i++) {
+    for (int i = 1; i < body.size(); i++) {
       if (head.x == body.get(i).x && head.y == body.get(i).y) {
         gc.endGame(GameState.LOSS);
       }
