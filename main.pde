@@ -5,8 +5,10 @@ Sandworm wurm;
 GameController gc;
 Harvester harvester;
 
+PImage background, buttonP1, buttonP2, titleText;
+
 void setup() {
-  size(600, 600);
+  size(850, 600);
   score = new Score();
   time = new Timer(2, 0);
   time.startTime();
@@ -14,6 +16,8 @@ void setup() {
   board = new Board(75, 100, 15);
   wurm = new Sandworm();
   harvester = new Harvester();
+  
+  background = loadImage("background.png");
 }
 
 void draw() {
@@ -24,7 +28,8 @@ void keyPressed() {
   if (key == ' ') {
     wurm.queueAdd();
   }
-  if (key == CODED) {
+  
+  if (gc.gameState == GameState.PLAYING && key == CODED) {
     if (keyCode == UP) {
       //wurm.changeDirUp();
       wurm.queueDir(0);

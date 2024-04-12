@@ -3,7 +3,7 @@ class GameController {
   GameState gameState;
   
    GameController(){
-     gameState = GameState.PLAYING;
+     gameState = GameState.START_MENU;
    }
    
    void startGame(){
@@ -20,7 +20,10 @@ class GameController {
   }
   
   void display() {
-    if (gameState == GameState.PLAYING) {
+    // Display based on game state
+    if (gameState == GameState.START_MENU) {
+      displayStartMenu();
+    } else if (gameState == GameState.PLAYING) {
       displayGame();
     } else if (gameState == GameState.WIN ||
       gameState == GameState.LOSS ||
@@ -30,10 +33,15 @@ class GameController {
       displayGameEnd();
     }
     
+    // Update the worm and check for collisions if the game is being played
     if (gameState == GameState.PLAYING) {
       wurm.update();
       wurm.checkCollision(); 
     }
+  }
+  
+  void displayStartMenu() {
+    image(background, 0, 0);
   }
   
   void displayGame() {
