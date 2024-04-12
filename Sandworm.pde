@@ -161,3 +161,25 @@ class Sandworm {
     }
   }
 }
+
+class DirChange {
+  int index;
+  float dx, dy;
+  
+  DirChange(int index, float dx, float dy) {
+    this.index = index;
+    this.dx = dx;
+    this.dy = dy;
+  }
+}
+
+class Body {
+  float x, y, dx, dy;
+  
+  Body(float x, float y, float dx, float dy) {
+    this.x = x;
+    this.y = y;
+    this.dx = dx;
+    this.dy = dy;
+  }
+}
