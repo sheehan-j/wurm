@@ -23,7 +23,7 @@ class GameController {
   
   void display() {
     // Display based on game state
-    if (gameState == GameState.START_MENU) {
+    if (gameState == GameState.START_MENU || gameState == GameState.START_MENU_2) {
       displayStartMenu();
     } else if (gameState == GameState.PLAYING) {
       displayGame();
@@ -47,12 +47,19 @@ class GameController {
     image(titleText, 20, height-180);
     button1P.display();
     button2P.display();
+    if(gameState == GameState.START_MENU_2){
+      buttonStart.display();
+      buttonDif1.display();
+      buttonDif2.display();
+      buttonDif3.display();
+    }
+      
   }
   
   void displayGame() {
     background(200);
-    score.display();
-    time.display(width/2, 50);
+    score.display(width-75, 15);
+    time.display(75, 50);
     board.display();
     wurm.display();
     harvester.display();
@@ -82,7 +89,7 @@ class GameController {
 }
 
 enum GameState {
-  START_MENU, PLAYING, WIN, LOSS, P1_WIN, P2_WIN;
+  START_MENU, PLAYING, WIN, LOSS, P1_WIN, P2_WIN,START_MENU_2;
 }
 
 class Button {

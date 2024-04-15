@@ -17,11 +17,11 @@ class Score {
      score = 0;
    }
    
-   void display() {
+   void display(float x, float y) {
      fill(255);
      textFont(arial);
      textSize(48);
      textAlign(RIGHT, TOP);
-     text(str(this.score), width-10, 15);
+     text(str(this.score), x,y);
    }
 }

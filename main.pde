@@ -13,7 +13,7 @@ PImage bodyLeft, bodyRight, bodyUp, bodyDown;
 PImage tailLeft, tailRight, tailUp, tailDown;
 PImage harvesterImage;
 PFont arial;
-Button button1P, button2P;
+Button button1P, button2P, buttonStart, buttonDif1, buttonDif2, buttonDif3;
 SoundFile bkgMusic;
 SoundFile wormEat;
 
@@ -21,12 +21,12 @@ void setup() {
   size(850, 600);
   
   score = new Score();
-  time = new Timer(2, 0);
+  time = new Timer();
   time.startTime();
   gc = new GameController();
   board = new Board(-1, -1, 15);
   wurm = new Sandworm();
-  harvester = new Harvester();
+  harvester = new Harvester(wurm);
   
   background = loadImage("background.png");
   image1P = loadImage("1pbutton.png");
@@ -53,6 +53,10 @@ void setup() {
   
   button1P = new Button(image1P, 150, 150, width-320, 40);
   button2P = new Button(image2P, 150, 150, width-170, 40);
+  buttonDif1= new Button(image2P, 150, 150, width-350, 160);
+  buttonDif2 = new Button(image2P, 150, 150, width-250, 160);
+  buttonDif3 = new Button(image2P, 150, 150, width-150, 160);
+  buttonStart = new Button(image2P, 150, 150, width-245, 300);
   
   arial = loadFont("Arial-BoldMT-48.vlw");
   
@@ -66,8 +70,11 @@ void draw() {
 }
 
 void mousePressed() {
-  if (gc.gameState == GameState.START_MENU) {
-    if (button1P.checkPressed()) {
+  if (gc.gameState == GameState.START_MENU || gc.gameState == GameState.START_MENU_2) {
+    if (button1P.checkPressed() || button2P.checkPressed()) {
+      gc.gameState = GameState.START_MENU_2;
+    }
+    if(buttonStart.checkPressed()){
       gc.startGame();
     }
   }
