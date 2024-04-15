@@ -14,7 +14,7 @@ class Sandworm {
     dirQueue = new ArrayList<DirChange>();
 
     // Set the speed so that the snake travels one box every frameRate/3 frames
-    speed = board.getBoxSize() / (frameRate/gameDifficulty);
+    speed = board.getBoxSize() / (60/gameDifficulty);
 
     body.add(
       new Body(
