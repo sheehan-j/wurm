@@ -13,7 +13,7 @@ PImage bodyLeft, bodyRight, bodyUp, bodyDown;
 PImage tailLeft, tailRight, tailUp, tailDown;
 PImage harvesterImage;
 PFont arial;
-Button button1P, button2P, buttonStart, buttonDif1, buttonDif2, buttonDif3;
+Button button1P, button2P, buttonStart, buttonDif1, buttonDif2, buttonDif3, buttonRestart, buttonMainMenu;
 SoundFile bkgMusic;
 SoundFile wormEat;
 
@@ -22,11 +22,7 @@ void setup() {
   
   score = new Score();
   time = new Timer();
-  time.startTime();
   gc = new GameController();
-  board = new Board(-1, -1, 15);
-  wurm = new Sandworm();
-  harvester = new Harvester(wurm);
   
   background = loadImage("background.png");
   image1P = loadImage("1pbutton.png");
@@ -51,12 +47,14 @@ void setup() {
   
   harvesterImage = loadImage("harvester.png");
   
-  button1P = new Button(image1P, 150, 150, width-320, 40);
-  button2P = new Button(image2P, 150, 150, width-170, 40);
-  buttonDif1= new Button(image2P, 150, 150, width-350, 160);
-  buttonDif2 = new Button(image2P, 150, 150, width-250, 160);
-  buttonDif3 = new Button(image2P, 150, 150, width-150, 160);
-  buttonStart = new Button(image2P, 150, 150, width-245, 300);
+  button1P = new Button(image1P, 110, 100, width-300, 40);
+  button2P = new Button(image2P, 110, 110, width-150, 40);
+  buttonDif1= new Button(image2P, 110, 110, width-340, 160);
+  buttonDif2 = new Button(image2P, 110, 110, width-230, 160);
+  buttonDif3 = new Button(image2P, 110, 110, width-120, 160);
+  buttonStart = new Button(image2P, 110, 110, width-225, 300);
+  buttonRestart = new Button(image2P, 110, 110, width/2-110-10, height/2-20);
+  buttonMainMenu = new Button(image2P, 110, 110, width/2+10, height/2-20);
   
   arial = loadFont("Arial-BoldMT-48.vlw");
   
@@ -77,6 +75,15 @@ void mousePressed() {
     if(buttonStart.checkPressed()){
       gc.startGame();
     }
+  } else if (gc.gameState == GameState.WIN ||
+    gc.gameState == GameState.LOSS ||
+    gc.gameState == GameState.P1_WIN ||
+    gc.gameState == GameState.P2_WIN) {
+     if (buttonRestart.checkPressed()) {
+       gc.startGame();
+     } else if (buttonMainMenu.checkPressed()) {
+       gc.gameState = GameState.START_MENU; 
+     }
   }
 }
 

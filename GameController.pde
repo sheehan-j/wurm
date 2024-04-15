@@ -8,7 +8,11 @@ class GameController {
    }
    
    void startGame(){
-     gameState = GameState.PLAYING;
+     time.startTime();
+     board = new Board(-1, -1, 15);
+     wurm = new Sandworm();
+     harvester = new Harvester();
+     this.gameState = GameState.PLAYING;
      startFrame = frameCount;
    }
    
@@ -68,19 +72,22 @@ class GameController {
   void displayGameEnd() {
     fill(255);
     rectMode(CENTER);
-    rect(width/2, height/2, width/2, height/2);
+    rect(width/2, height/2, 400, 250);
     textAlign(CENTER);
     textSize(48); 
     fill(0);
     
+    buttonRestart.display();
+    buttonMainMenu.display();
+    
     if (gameState == GameState.LOSS) {
-      text("Game Over", width/2, height/2);
+      text("Game Over", width/2, height/2-40);
     } else if (gameState == GameState.WIN) {
-      text("You Win!", width/2, height/2);
+      text("You Win!", width/2, height/2-40);
     } else if (gameState == GameState.P1_WIN) {
-      text("Player 1 wins", width/2, height/2);
+      text("Player 1 wins", width/2, height/2-40);
     } else if (gameState == GameState.P2_WIN) {
-      text("Player 2 wins", width/2, height/2);
+      text("Player 2 wins", width/2, height/2-40);
     } else {
       print("Problem");
     }
@@ -89,7 +96,7 @@ class GameController {
 }
 
 enum GameState {
-  START_MENU, PLAYING, WIN, LOSS, P1_WIN, P2_WIN,START_MENU_2;
+  START_MENU, START_MENU_2, PLAYING, WIN, LOSS, P1_WIN, P2_WIN;
 }
 
 class Button {
@@ -105,7 +112,8 @@ class Button {
    }
    
    void display() {
-     image(buttonImage, x, y, buttonWidth, buttonHeight);
+     imageMode(CORNER);
+     image(buttonImage, x, y, buttonWidth, buttonHeight); 
    }
    
    boolean checkPressed() {

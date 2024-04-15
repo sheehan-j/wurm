@@ -19,8 +19,6 @@ class Timer {
     countUp = false;
   }
 
-
-
   int getTime() {
     return time;
   }
