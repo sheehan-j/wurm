@@ -4,6 +4,7 @@ class GameController {
   int startFrame;
   float gameDifficulty;
   boolean is2P;
+  boolean isEasy;
   
    GameController(){
      gameState = GameState.START_MENU;
@@ -12,6 +13,7 @@ class GameController {
    void startGame(boolean isEasy){
      time = new Timer();
      time.startTime();
+     this.isEasy = isEasy;
      gameDifficulty = isEasy ? 6 : 7.5;
      score = new Score();
      board = new Board(-1, -1, 15);
@@ -26,6 +28,7 @@ class GameController {
    void startGame2P(boolean isEasy){
      time = new Timer();
      time.startTime();
+     this.isEasy = isEasy;
      gameDifficulty = isEasy ? 6 : 7.5;
      score = new Score();
      board = new Board(-1, -1, 15);
@@ -75,6 +78,7 @@ class GameController {
     image(titleText, 20, height-180);
     button1P.display();
     button2P.display();
+    buttonQuit.display();
     if(gameState == GameState.START_MENU_2) {
       buttonStart.display();
       buttonEasy.display();

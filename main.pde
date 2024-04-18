@@ -16,7 +16,7 @@ PImage bodyLeft2, bodyRight2, bodyUp2, bodyDown2;
 PImage tailLeft2, tailRight2, tailUp2, tailDown2;
 PImage harvesterImage;
 PFont arial;
-Button button1P, button2P, buttonStart, buttonEasy, buttonHard, buttonRestart, buttonMainMenu;
+Button button1P, button2P, buttonStart, buttonQuit, buttonEasy, buttonHard, buttonRestart, buttonMainMenu;
 SoundFile bkgMusic;
 SoundFile wormEat;
 
@@ -71,6 +71,7 @@ void setup() {
   buttonEasy = new Button(image2P, image2PSelected, true, 110, 110, width-300, 160);
   buttonHard = new Button(image2P, image2PSelected, false, 110, 110, width-150, 160);
   buttonStart = new Button(image2P, null, false, 110, 110, width-225, 300);
+  buttonQuit = new Button(image2P, null, false, 110, 110, width-225, height - 150);
   buttonRestart = new Button(image2P, null, false, 110, 110, width/2-110-10, height/2-20);
   buttonMainMenu = new Button(image2P, null, false, 110, 110, width/2+10, height/2-20);
   
@@ -104,6 +105,8 @@ void mousePressed() {
     } else if (buttonStart.checkPressed()){
       if (button1P.selected) gc.startGame(buttonEasy.selected ? true : false);
       else gc.startGame2P(buttonEasy.selected ? true : false);
+    } else if (buttonQuit.checkPressed()) {
+      exit();
     }
   } else if (gc.gameState == GameState.WIN ||
     gc.gameState == GameState.LOSS ||
