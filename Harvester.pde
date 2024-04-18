@@ -24,7 +24,6 @@ class Harvester {
       
       // If the harvester was generated inside the wurm, reset inWurm and retry
       if (inWurm) {
-        print("in");
          inWurm = false;
          continue;
       }
