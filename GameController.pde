@@ -2,25 +2,42 @@ class GameController {
   
   GameState gameState;
   int startFrame;
+  float gameDifficulty;
+  boolean is2P;
   
    GameController(){
      gameState = GameState.START_MENU;
    }
    
-   void startGame(){
+   void startGame(boolean isEasy){
+     time = new Timer();
      time.startTime();
+     gameDifficulty = isEasy ? 6 : 7.5;
+     score = new Score();
      board = new Board(-1, -1, 15);
-     wurm = new Sandworm();
+     wurm = new Sandworm(false);
+     wurm2 = null;
      harvester = new Harvester();
      this.gameState = GameState.PLAYING;
+     is2P = false;
      startFrame = frameCount;
    }
    
-   void startGame2P(){
-     
+   void startGame2P(boolean isEasy){
+     time = new Timer();
+     time.startTime();
+     gameDifficulty = isEasy ? 6 : 7.5;
+     score = new Score();
+     board = new Board(-1, -1, 15);
+     wurm = new Sandworm(false);
+     wurm2 = new Sandworm(true);
+     harvester = new Harvester();
+     this.gameState = GameState.PLAYING;
+     is2P = true;
+     startFrame = frameCount;
    }
    
-   void endGame(GameState gameState) { // Either WIN, LOSS, P1_WIN, P2_WIN 
+   void endGame(GameState gameState) { // Either WIN, LOSS, P1_WIN, P2_WIN, DRAW
     this.gameState = gameState;
     time.stopTime();
   }
@@ -34,7 +51,8 @@ class GameController {
     } else if (gameState == GameState.WIN ||
       gameState == GameState.LOSS ||
       gameState == GameState.P1_WIN ||
-      gameState == GameState.P2_WIN) {
+      gameState == GameState.P2_WIN ||
+      gameState == GameState.DRAW) {
       displayGame();
       displayGameEnd();
     }
@@ -44,6 +62,12 @@ class GameController {
       wurm.update();
       wurm.checkCollision(); 
     }
+    
+    // Recheck for gamestate bc it could be updated by the wurm check collision
+    if (wurm2 != null && gameState == GameState.PLAYING) {
+      wurm2.update();
+      wurm2.checkCollision();
+    }
   }
   
   void displayStartMenu() {
@@ -51,11 +75,10 @@ class GameController {
     image(titleText, 20, height-180);
     button1P.display();
     button2P.display();
-    if(gameState == GameState.START_MENU_2){
+    if(gameState == GameState.START_MENU_2) {
       buttonStart.display();
-      buttonDif1.display();
-      buttonDif2.display();
-      buttonDif3.display();
+      buttonEasy.display();
+      buttonHard.display();
     }
       
   }
@@ -67,6 +90,8 @@ class GameController {
     board.display();
     wurm.display();
     harvester.display();
+    
+    if (wurm2 != null) wurm2.display();
   }
   
   void displayGameEnd() {
@@ -88,6 +113,8 @@ class GameController {
       text("Player 1 wins", width/2, height/2-40);
     } else if (gameState == GameState.P2_WIN) {
       text("Player 2 wins", width/2, height/2-40);
+    } else if (gameState == GameState.DRAW) {
+      text("Draw!", width/2, height/2-40);
     } else {
       print("Problem");
     }
@@ -96,24 +123,33 @@ class GameController {
 }
 
 enum GameState {
-  START_MENU, START_MENU_2, PLAYING, WIN, LOSS, P1_WIN, P2_WIN;
+  START_MENU, START_MENU_2, PLAYING, WIN, LOSS, P1_WIN, P2_WIN, DRAW;
 }
 
 class Button {
   int buttonWidth, buttonHeight, x, y;
-  PImage buttonImage;
+  PImage buttonImage, selectedButtonImage;
+  boolean selected;
    
-   Button(PImage buttonImage, int buttonWidth, int buttonHeight, int x, int y) {
+   Button(PImage buttonImage, PImage selectedButtonImage, boolean selected, int buttonWidth, int buttonHeight, int x, int y) {
      this.buttonImage = buttonImage;
+     this.selectedButtonImage = selectedButtonImage;
+     this.selected = selected;
      this.buttonWidth = buttonWidth;
      this.buttonHeight = buttonHeight;
      this.x = x;
      this.y = y;
    }
    
+   void setSelected(boolean isSelected) {
+      selected = isSelected;
+      
+   }
+   
    void display() {
      imageMode(CORNER);
-     image(buttonImage, x, y, buttonWidth, buttonHeight); 
+     if (selected) image(selectedButtonImage, x, y, buttonWidth, buttonHeight);
+     else image(buttonImage, x, y, buttonWidth, buttonHeight);
    }
    
    boolean checkPressed() {

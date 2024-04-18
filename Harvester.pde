@@ -22,7 +22,13 @@ class Harvester {
         if (inWurm) break;
       }
       
-      if (!inWurm) break;
+      // If the harvester was generated inside the wurm, reset inWurm and retry
+      if (inWurm) {
+         inWurm = false;
+         continue;
+      }
+      
+      break;
     }
   }
   

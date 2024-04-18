@@ -1,5 +1,4 @@
 class Sandworm {
-  Sandworm sandworm;
   ArrayList<Body> body;
   float speed;
   int dir = 1; // represents the most recent dir change (0 up, 1 right, 2 down, 3 left)
@@ -7,29 +6,47 @@ class Sandworm {
   int add = 0; // "Queue" of body objects to be added
   ArrayList<DirChange> dirQueue; // Queue for direction changes
   
-  int gameDifficulty = 6;
+  boolean isWurm2 = false;
 
-  Sandworm() {
+  Sandworm(boolean isWurm2) {
     body = new ArrayList<Body>();
     dirQueue = new ArrayList<DirChange>();
 
     // Set the speed so that the snake travels one box every frameRate/3 frames
-    speed = board.getBoxSize() / (60/gameDifficulty);
+    speed = board.getBoxSize() / (60/gc.gameDifficulty);
+    
+    this.isWurm2 = isWurm2;
+    
+    float bodyPosX1, bodyPosX2, bodyPosY, dx, dy;
+    if (isWurm2) {
+      bodyPosX1 = board.numOfBoxes - 3;
+      bodyPosX2 = board.numOfBoxes - 2;
+      bodyPosY = 3;
+      bodyPosY = 5;
+      dx = -speed;
+      dy = 0;
+    } else {
+      bodyPosX1 = 2;
+      bodyPosX2 = 1;
+      bodyPosY = 8;
+      dx = speed;
+      dy = 0;
+    }
 
     body.add(
       new Body(
-      board.getXPos() - (board.getBoxSize()/2) + board.getBoxSize() * 2,
-      board.getYPos() - (board.getBoxSize()/2) + board.getBoxSize() * 8,
-      speed,
-      0
+      board.getXPos() - (board.getBoxSize()/2) + board.getBoxSize() * bodyPosX1,
+      board.getYPos() - (board.getBoxSize()/2) + board.getBoxSize() * bodyPosY,
+      dx,
+      dy
       )
       );
     body.add(
       new Body(
-      board.getXPos() - (board.getBoxSize()/2) + board.getBoxSize() * 1,
-      board.getYPos() - (board.getBoxSize()/2) + board.getBoxSize() * 8,
-      speed,
-      0
+      board.getXPos() - (board.getBoxSize()/2) + board.getBoxSize() * bodyPosX2,
+      board.getYPos() - (board.getBoxSize()/2) + board.getBoxSize() * bodyPosY,
+      dx,
+      dy
       )
       );
   }
@@ -69,7 +86,7 @@ class Sandworm {
 
     // Check if the box square size divided by speed divides into the frameCount
     // If so, the snake is aligned with the center of a box
-    if ((frameCount - gc.startFrame) % (board.getBoxSize()/speed) == 0) {
+    if ((frameCount - gc.startFrame) % int(board.getBoxSize()/speed) == 0) {
       int recentIndex = -1;
       for (int i = 0; i < dirQueue.size(); i++) {
         DirChange currDir = dirQueue.get(i);
@@ -152,7 +169,12 @@ class Sandworm {
       head.getRightBound() > board.getRightBound() || 
       head.getTopBound() < board.getTopBound() || 
       head.getBottomBound() > board.getBottomBound()) {
-      gc.endGame(GameState.LOSS);
+      if (gc.is2P) {
+        if (isWurm2) gc.endGame(GameState.P1_WIN);
+        else gc.endGame(GameState.P2_WIN);
+      } else {
+        gc.endGame(GameState.LOSS);
+      }
     }
     //check body
     for (int i = 1; i < body.size(); i++) {
@@ -161,6 +183,34 @@ class Sandworm {
         head.y < body.get(i).getBottomBound() && 
         head.y > body.get(i).getTopBound()) {
         gc.endGame(GameState.LOSS);
+      }
+    }
+    
+    if (gc.is2P) {
+      Sandworm wormToCheck = isWurm2 ? wurm : wurm2;
+      
+      // Check for head to head contact first
+      Body otherHead = wormToCheck.body.get(0);
+      if (head.x < otherHead.getRightBound() && 
+        head.x > otherHead.getLeftBound() && 
+        head.y < otherHead.getBottomBound() && 
+        head.y > otherHead.getTopBound()) {
+          if ((head.dx < 0 && otherHead.dx > 0) ||
+            (head.dx > 0 && otherHead.dx < 0) ||
+            (head.dy > 0 && otherHead.dy < 0) ||
+            (head.dy < 0 && otherHead.dy > 0)) {
+            gc.endGame(GameState.DRAW);
+            return;
+          }
+      }
+      
+      for (int i = 0; i < wormToCheck.body.size(); i++) {;
+        if (head.x < wormToCheck.body.get(i).getRightBound() && 
+        head.x > wormToCheck.body.get(i).getLeftBound() && 
+        head.y < wormToCheck.body.get(i).getBottomBound() && 
+        head.y > wormToCheck.body.get(i).getTopBound()) {
+          gc.endGame(isWurm2 ? GameState.P1_WIN : GameState.P2_WIN);
+        }
       }
     }
 
@@ -175,23 +225,23 @@ class Sandworm {
   
   PImage getWormImage(String bodyPart, float dx, float dy) {
      if (dx < 0) {
-       if (bodyPart == "head") return headLeft;
-       else if (bodyPart == "body") return bodyLeft;
-       else if (bodyPart == "tail") return tailLeft;
-     } else if (dx > 0) {
-       if (bodyPart == "head") return headRight;
-       else if (bodyPart == "body") return bodyRight;
-       else if (bodyPart == "tail") return tailRight;
-     } else if (dy > 0) {
-       if (bodyPart == "head") return headDown;
-       else if (bodyPart == "body") return bodyDown;
-       else if (bodyPart == "tail") return tailDown;
-     } else {
-       if (bodyPart == "head") return headUp;
-       else if (bodyPart == "body") return bodyUp;
-       else if (bodyPart == "tail") return tailUp;
-     }
-     
+        if (bodyPart == "head") return isWurm2 ? headLeft2 : headLeft;
+        else if (bodyPart == "body") return isWurm2 ? bodyLeft2 : bodyLeft;
+        else if (bodyPart == "tail") return isWurm2 ? tailLeft2 : tailLeft;
+    } else if (dx > 0) {
+        if (bodyPart == "head") return isWurm2 ? headRight2 : headRight;
+        else if (bodyPart == "body") return isWurm2 ? bodyRight2 : bodyRight;
+        else if (bodyPart == "tail") return isWurm2 ? tailRight2 : tailRight;
+    } else if (dy > 0) {
+        if (bodyPart == "head") return isWurm2 ? headDown2 : headDown;
+        else if (bodyPart == "body") return isWurm2 ? bodyDown2 : bodyDown;
+        else if (bodyPart == "tail") return isWurm2 ? tailDown2 : tailDown;
+    } else {
+        if (bodyPart == "head") return isWurm2 ? headUp2 : headUp;
+        else if (bodyPart == "body") return isWurm2 ? bodyUp2 : bodyUp;
+        else if (bodyPart == "tail") return isWurm2 ? tailUp2 : tailUp;
+    }
+
      return null;
   }
 }
