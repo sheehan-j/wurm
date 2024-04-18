@@ -18,17 +18,7 @@ class Board {
 
   void display() {
     fill(255, 0, 0);
-    
     strokeWeight(1);
-    
-    //for (int i = 0; i<= numOfBoxes; i++) {
-    //  line(xPos + (i*boxSize), yPos, xPos + (i*boxSize), yPos + size);
-    //}
-
-    //for (int j = 0; j <= numOfBoxes; j++) {
-    //  line(xPos, yPos + (j*boxSize), xPos + size, yPos + (j*boxSize));
-    //}
-    
     imageMode(CORNER);
     for (int i = 0; i < numOfBoxes; i++) {
       for (int j = 0; j < numOfBoxes; j++) {
