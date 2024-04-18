@@ -73,10 +73,17 @@ class Timer {
 
   void display(float x, float y)
   {
+    fill(100);
+    rectMode(CENTER);
+    rect(x, y-11, 136, 80);
+    
     fill(255);
     textFont(arial);
-    textSize(48);
-    textAlign(CENTER);
+    textAlign(CENTER, CENTER);
+    textSize(18);
+    text("Time Elapsed", x, y-30);
+    
+    textSize(42);
     String sec = getSecond() < 10 ? '0' + str(getSecond()) : str(getSecond());
     text(str(getMinute()) + ":" +sec, x, y);
   }

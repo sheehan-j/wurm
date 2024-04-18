@@ -85,8 +85,8 @@ class GameController {
   
   void displayGame() {
     background(200);
-    score.display(width-75, 15);
-    time.display(75, 50);
+    score.display(width-75, height/2);
+    time.display(75, height/2);
     board.display();
     wurm.display();
     harvester.display();

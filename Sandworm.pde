@@ -217,7 +217,8 @@ class Sandworm {
     //check "food"
     if (head.x > harvester.getBound("left") && head.x < harvester.getBound("right") && head.y < harvester.getBound("bottom") && head.y > harvester.getBound("top")) {
       this.add();
-      score.increase();
+      if (this.isWurm2) score.increaseScore2();  
+      else score.increase();
       wormEat.play();
       harvester.generate(this);
     }
