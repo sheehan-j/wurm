@@ -6,6 +6,7 @@ class Timer {
   private boolean countUp;
 
   Timer() {
+    time = 0;
     countUp = true;
   }
 
@@ -40,9 +41,9 @@ class Timer {
 
     if (countUp) {
       if (running) {
-        elapsed = (millis() + start);
+        elapsed = (millis() - start);
       } else {
-        elapsed = (lastStop + start);
+        elapsed = (lastStop - start);
       }
     } else {
       if (running) {
