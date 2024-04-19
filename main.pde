@@ -8,6 +8,9 @@ GameController gc;
 Harvester harvester;
 
 PImage background, image1P, image1PSelected, image2P, image2PSelected, titleText, sand;
+PImage easy, hard, easySelected, hardSelected;
+PImage start, exit, restart;
+PImage gamebackground, gobackground;
 PImage headLeft, headRight, headUp, headDown;
 PImage bodyLeft, bodyRight, bodyUp, bodyDown;
 PImage tailLeft, tailRight, tailUp, tailDown;
@@ -27,11 +30,23 @@ void setup() {
   
   background = loadImage("background.png");
   image1P = loadImage("1pbutton.png");
-  image1PSelected = loadImage("1pbuttonselected.png");
+  image1PSelected = loadImage("p1buttonoutlined.png");
   image2P = loadImage("2pbutton.png");
-  image2PSelected = loadImage("2pbuttonselected.png");
+  image2PSelected = loadImage("2pbuttonOutlined.png");
   titleText = loadImage("titletext.png");
   sand = loadImage("sand.png");
+  
+  easy = loadImage("difficulty1.png");
+  hard = loadImage("difficulty2.png");
+  easySelected = loadImage("difficulty1outlined.png");
+  hardSelected = loadImage("difficulty2outlined.png");
+  
+  start = loadImage("start.png");
+  exit = loadImage("quit.png");
+  restart = loadImage("restart.png");
+  
+  gamebackground = loadImage("gamebackground.png");
+  gobackground =  loadImage("gameoverbackground.png");
   
   headUp = loadImage("wormheadup.png");
   headLeft = loadImage("wormheadleft.png");
@@ -68,12 +83,12 @@ void setup() {
   
   button1P = new Button(image1P, image1PSelected, false, 110, 100, width-300, 40);
   button2P = new Button(image2P, image2PSelected, false, 110, 110, width-150, 40);
-  buttonEasy = new Button(image2P, image2PSelected, true, 110, 110, width-300, 160);
-  buttonHard = new Button(image2P, image2PSelected, false, 110, 110, width-150, 160);
-  buttonStart = new Button(image2P, null, false, 110, 110, width-225, 300);
-  buttonQuit = new Button(image2P, null, false, 110, 110, width-225, height - 150);
-  buttonRestart = new Button(image2P, null, false, 110, 110, width/2-110-10, height/2-20);
-  buttonMainMenu = new Button(image2P, null, false, 110, 110, width/2+10, height/2-20);
+  buttonEasy = new Button(easy, easySelected, true, 110, 110, width-300, 160);
+  buttonHard = new Button(hard, hardSelected, false, 110, 110, width-150, 160);
+  buttonStart = new Button(start, null, false, 110, 110, width-225, 300);
+  buttonQuit = new Button(exit, null, false, 110, 110, width-225, height - 150);
+  buttonRestart = new Button(restart, null, false, 110, 110, width/2-110-10, height/2-20);
+  buttonMainMenu = new Button(exit, null, false, 110, 110, width/2+10, height/2-20);
   
   arial = loadFont("Arial-BoldMT-48.vlw");
   

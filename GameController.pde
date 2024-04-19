@@ -88,7 +88,7 @@ class GameController {
   }
   
   void displayGame() {
-    background(200);
+    image(gamebackground,width/2, height/2, width, height);
     score.display(width-75, height/2);
     time.display(75, height/2);
     board.display();
@@ -101,11 +101,12 @@ class GameController {
   void displayGameEnd() {
     fill(255);
     rectMode(CENTER);
-    rect(width/2, height/2, 400, 250);
+    //rect(width/2, height/2, 400, 250);
     textAlign(CENTER);
     textSize(48); 
     fill(0);
     
+    image(gobackground,width/2, height/2, 700, 400);
     buttonRestart.display();
     buttonMainMenu.display();
     
