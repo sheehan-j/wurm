@@ -88,6 +88,7 @@ class GameController {
   }
   
   void displayGame() {
+    imageMode(CENTER);
     image(gamebackground,width/2, height/2, width, height);
     score.display(width-75, height/2);
     time.display(75, height/2);
@@ -99,14 +100,17 @@ class GameController {
   }
   
   void displayGameEnd() {
-    fill(255);
+    fill(209,145,6);
     rectMode(CENTER);
-    //rect(width/2, height/2, 400, 250);
+    stroke(92,64,3);
+    strokeWeight(3);
+    rect(width/2, height/2, 450, 250);
     textAlign(CENTER);
-    textSize(48); 
+    textSize(42);
+    textFont(duneFont);
     fill(0);
     
-    image(gobackground,width/2, height/2, 700, 400);
+    //image(gobackground,width/2, height/2, 700, 400);
     buttonRestart.display();
     buttonMainMenu.display();
     
@@ -115,9 +119,9 @@ class GameController {
     } else if (gameState == GameState.WIN) {
       text("You Win!", width/2, height/2-40);
     } else if (gameState == GameState.P1_WIN) {
-      text("Player 1 wins", width/2, height/2-40);
+      text("P1 Wins!", width/2, height/2-40);
     } else if (gameState == GameState.P2_WIN) {
-      text("Player 2 wins", width/2, height/2-40);
+      text("P2 Wins!", width/2, height/2-40);
     } else if (gameState == GameState.DRAW) {
       text("Draw!", width/2, height/2-40);
     } else {

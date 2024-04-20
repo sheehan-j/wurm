@@ -18,21 +18,22 @@ PImage headLeft2, headRight2, headUp2, headDown2;
 PImage bodyLeft2, bodyRight2, bodyUp2, bodyDown2;
 PImage tailLeft2, tailRight2, tailUp2, tailDown2;
 PImage harvesterImage;
-PFont arial;
+PFont arial, duneFont;
 Button button1P, button2P, buttonStart, buttonQuit, buttonEasy, buttonHard, buttonRestart, buttonMainMenu;
 SoundFile bkgMusic;
 SoundFile wormEat;
 
 void setup() {
   size(850, 600);
+  surface.setTitle("Wurm");
   
   gc = new GameController();
   
   background = loadImage("background.png");
   image1P = loadImage("1pbutton.png");
-  image1PSelected = loadImage("p1buttonoutlined.png");
+  image1PSelected = loadImage("1pbuttonoutlined.png");
   image2P = loadImage("2pbutton.png");
-  image2PSelected = loadImage("2pbuttonOutlined.png");
+  image2PSelected = loadImage("2pbuttonoutlined.png");
   titleText = loadImage("titletext.png");
   sand = loadImage("sand.png");
   
@@ -81,16 +82,17 @@ void setup() {
   
   harvesterImage = loadImage("harvester.png");
   
-  button1P = new Button(image1P, image1PSelected, false, 110, 100, width-300, 40);
-  button2P = new Button(image2P, image2PSelected, false, 110, 110, width-150, 40);
-  buttonEasy = new Button(easy, easySelected, true, 110, 110, width-300, 160);
-  buttonHard = new Button(hard, hardSelected, false, 110, 110, width-150, 160);
-  buttonStart = new Button(start, null, false, 110, 110, width-225, 300);
-  buttonQuit = new Button(exit, null, false, 110, 110, width-225, height - 150);
-  buttonRestart = new Button(restart, null, false, 110, 110, width/2-110-10, height/2-20);
-  buttonMainMenu = new Button(exit, null, false, 110, 110, width/2+10, height/2-20);
+  button1P = new Button(image1P, image1PSelected, false, 110, 100, width-280, 65);
+  button2P = new Button(image2P, image2PSelected, false, 110, 110, width-140, 60);
+  buttonEasy = new Button(easy, easySelected, true, 110, 110, width-280, 190);
+  buttonHard = new Button(hard, hardSelected, false, 110, 110, width-140, 190);
+  buttonStart = new Button(start, null, false, 190, 110, width-245, 320);
+  buttonQuit = new Button(exit, null, false, 190, 110, width-245, 450);
+  buttonRestart = new Button(restart, null, false, 180, 100, width/2-180-10, height/2-10);
+  buttonMainMenu = new Button(exit, null, false, 180, 100, width/2+10, height/2-10);
   
   arial = loadFont("Arial-BoldMT-48.vlw");
+  duneFont = loadFont("Dune_Rise-48.vlw");
   
   wormEat = new SoundFile(this, "wormeat.mp3");
   bkgMusic = new SoundFile(this, "desert_background_music.mp3");

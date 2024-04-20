@@ -131,6 +131,10 @@ class Sandworm {
       );
 
     body.add(newBody);
+    
+    if (body.size() >= ((board.numOfBoxes*board.numOfBoxes)-2)) {
+      gc.endGame(GameState.WIN);
+    }
   }
 
   void queueDir(int newDir) {
