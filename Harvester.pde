@@ -6,11 +6,13 @@ class Harvester {
   int dx = 0;
   int dy = 0;
   
+  // Generates a harvester and initializes its sped
   Harvester() {
     this.generate(wurm);
     speed = board.getBoxSize() / 7;
   }
   
+  // Generates a new harvester in a random location while avoiding generating inside of any wurm
   void generate(Sandworm wurm) {
     boolean inWurm = false;
     boolean first = true;
@@ -52,6 +54,7 @@ class Harvester {
     }
   }
   
+  // Displays the harvester on the board and calls the move function if the game mode is hard
   void display() {
     if (!gc.isEasy) move();
     
@@ -61,7 +64,7 @@ class Harvester {
     image(harvesterImage, x, y, board.getBoxSize()-4, board.getBoxSize()-4);
   }
   
-  // Check for the sandworm's vicinity and move accordingly
+  // Checks whether a wurm is within a specified radius and moves one tile if it has not moved already
   void move() {
     Sandworm wurmToCheck = wurm;
     int checks = 1;
@@ -120,6 +123,7 @@ class Harvester {
     }
   }
   
+  // Returns the bounds of the harvester based on position and size
   float getBound(String side) {
     if (side == "left") {
       return this.x - (board.boxSize/2);

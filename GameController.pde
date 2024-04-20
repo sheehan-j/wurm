@@ -10,6 +10,7 @@ class GameController {
      gameState = GameState.START_MENU;
    }
    
+   // Initialize the game for 1-player mode, either easy or hard mode
    void startGame(boolean isEasy){
      time = new Timer();
      time.startTime();
@@ -25,6 +26,7 @@ class GameController {
      startFrame = frameCount;
    }
    
+   // Initialize the game for 2-player mode, either easy or hard mode
    void startGame2P(boolean isEasy){
      time = new Timer();
      time.startTime();
@@ -40,11 +42,14 @@ class GameController {
      startFrame = frameCount;
    }
    
+   // Stops the game and changes to the provided state
    void endGame(GameState gameState) { // Either WIN, LOSS, P1_WIN, P2_WIN, DRAW
     this.gameState = gameState;
     time.stopTime();
   }
   
+  // Main display method, displays all menus/the game based on game state
+  // Also updates the wurms and checks for collisions
   void display() {
     // Display based on game state
     if (gameState == GameState.START_MENU || gameState == GameState.START_MENU_2) {
@@ -73,6 +78,7 @@ class GameController {
     }
   }
   
+  // Displays all relevant visuals for the start menu
   void displayStartMenu() {
     image(background, 0, 0);
     image(titleText, 20, height-180);
@@ -87,6 +93,7 @@ class GameController {
       
   }
   
+  // Displays all elements of the game when it is being played
   void displayGame() {
     imageMode(CENTER);
     image(gamebackground,width/2, height/2, width, height);
@@ -99,6 +106,7 @@ class GameController {
     if (wurm2 != null) wurm2.display();
   }
   
+  // Displays all relevant visuals for the game over menu
   void displayGameEnd() {
     fill(209,145,6);
     rectMode(CENTER);
@@ -131,15 +139,18 @@ class GameController {
   }
 }
 
+// All possible game states
 enum GameState {
   START_MENU, START_MENU_2, PLAYING, WIN, LOSS, P1_WIN, P2_WIN, DRAW;
 }
 
+// Class to represent all buttons in the UI
 class Button {
   int buttonWidth, buttonHeight, x, y;
   PImage buttonImage, selectedButtonImage;
   boolean selected;
    
+   // Initializes all relevant button data
    Button(PImage buttonImage, PImage selectedButtonImage, boolean selected, int buttonWidth, int buttonHeight, int x, int y) {
      this.buttonImage = buttonImage;
      this.selectedButtonImage = selectedButtonImage;
@@ -150,17 +161,19 @@ class Button {
      this.y = y;
    }
    
+   // Sets the selected state of the button
    void setSelected(boolean isSelected) {
       selected = isSelected;
-      
    }
    
+   // Displays all visuals for the button
    void display() {
      imageMode(CORNER);
      if (selected) image(selectedButtonImage, x, y, buttonWidth, buttonHeight);
      else image(buttonImage, x, y, buttonWidth, buttonHeight);
    }
    
+   // Checks whether the mouse's current position is within the bounds of the button
    boolean checkPressed() {
       return mouseX > x && mouseX < x+buttonWidth && mouseY > y && mouseY < y + buttonHeight; 
    }

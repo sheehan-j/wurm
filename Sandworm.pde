@@ -8,6 +8,7 @@ class Sandworm {
   
   boolean isWurm2 = false;
 
+  // Initializes relevant arrays and adds a head and tail to the wurm (changes position and direction based on if it the 1P/2P wurm)
   Sandworm(boolean isWurm2) {
     body = new ArrayList<Body>();
     dirQueue = new ArrayList<DirChange>();
@@ -51,6 +52,7 @@ class Sandworm {
       );
   }
 
+  // Draws the various pieces of the wurm's body
   void display() {
     // Stroke settings
     strokeWeight(1);
@@ -76,6 +78,10 @@ class Sandworm {
     image(getWormImage("tail", body.get(body.size()-1).dx, body.get(body.size()-1).dy), body.get(body.size()-1).x, body.get(body.size()-1).y, imageSize, imageSize);
   }
 
+  // Moves the position of each piece of the wurm's body based on the body piece's current dx, dy
+  // If a certain amount of frames have based since the game's start, also checks the dirQueue
+  // and performs a direction change where appropriate
+  // Lastly, adds a piece to the body if an add has been queued
   void update() {
     // Increment the position of all body parts
     for (int i = 0; i < body.size(); i++) {
@@ -115,10 +121,13 @@ class Sandworm {
     }
   }
 
+  // Adds one body piece to the queue
   void queueAdd() {
     add += 1;
   }
 
+  // Appends a new Body object to the list of body pieces 
+  // Also checks if enough body pieces have been added to meet the game's win condition
   void add() {
     Body last = body.get(body.size()-1);
 
@@ -137,6 +146,7 @@ class Sandworm {
     }
   }
 
+  // Queues a direction change to be applied to wurm based on the newDir input
   void queueDir(int newDir) {
     boolean invalidDirChange = (newDir == 0 && (dir == 0 || dir == 2));
     invalidDirChange = invalidDirChange || (newDir == 2 && (dir == 0 || dir == 2));
@@ -165,6 +175,8 @@ class Sandworm {
     dirQueue.add(new DirChange(0, newDx, newDy));
   }
 
+  // Checks for the wurm's head's collision with the bounds of the board, its own body,
+  // a harvester, and if applicable, the other wurm
   void checkCollision() {
     Body head = body.get(0);
 
@@ -228,6 +240,7 @@ class Sandworm {
     }
   }
   
+  // Returns the appropriate image for the worm based on the desired body part (head, tail, body) and direction
   PImage getWormImage(String bodyPart, float dx, float dy) {
      if (dx < 0) {
         if (bodyPart == "head") return isWurm2 ? headLeft2 : headLeft;
@@ -251,6 +264,7 @@ class Sandworm {
   }
 }
 
+// Class to represent direction changes that will be applied to each body piece of the wurm
 class DirChange {
   int index;
   float dx, dy;
@@ -262,6 +276,7 @@ class DirChange {
   }
 }
 
+// Class to represent pieces of the wurm's body (includes head and tail)
 class Body {
   float x, y, dx, dy;
   

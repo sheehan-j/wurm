@@ -103,6 +103,7 @@ void draw() {
   gc.display();
 }
 
+// Check for whether various buttons are displayed based on gamestate
 void mousePressed() {
   if (gc.gameState == GameState.START_MENU || gc.gameState == GameState.START_MENU_2) {
     if (button1P.checkPressed()) {
@@ -143,12 +144,9 @@ void mousePressed() {
   }
 }
 
+// Check for WASD or arrow keys input based on gamestate/1-player v. 2-player
 void keyPressed() {  
   if (gc.gameState == GameState.PLAYING) {
-    if (key == ' ') {
-      wurm.queueAdd();
-    }
-    
     if (key == CODED) {
       if (keyCode == UP) wurm.queueDir(0);
       else if (keyCode == DOWN) wurm.queueDir(2);
