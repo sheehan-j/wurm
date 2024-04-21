@@ -143,7 +143,7 @@ void mousePressed() {
        buttonEasy.setSelected(true);
        buttonHard.setSelected(false);
      }
-  } else if (gc.gameState == GameState.MAN1 || gc.gameState == GameState.MAN2 || gc.gameState == GameState.MAN3) {
+  } else if (gc.gameState == GameState.MAN1 || gc.gameState == GameState.MAN2 || gc.gameState == GameState.MAN3 || gc.gameState == GameState.MAN4 || gc.gameState == GameState.MAN5) {
     gc.checkManualControlPressed();
   }
 }
