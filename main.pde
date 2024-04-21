@@ -18,7 +18,7 @@ PImage headLeft2, headRight2, headUp2, headDown2;
 PImage bodyLeft2, bodyRight2, bodyUp2, bodyDown2;
 PImage tailLeft2, tailRight2, tailUp2, tailDown2;
 PImage harvesterImage;
-PFont arial, duneFont;
+PFont arial, duneFont, arialSmall;
 Button button1P, button2P, buttonStart, buttonQuit, buttonEasy, buttonHard, buttonRestart, buttonMainMenu;
 SoundFile bkgMusic;
 SoundFile wormEat;
@@ -79,20 +79,20 @@ void setup() {
   tailDown2 = loadImage("wormtail2down.png");
   tailRight2 = loadImage("wormtail2right.png");
 
-  
   harvesterImage = loadImage("harvester.png");
   
-  button1P = new Button(image1P, image1PSelected, false, 110, 100, width-280, 65);
-  button2P = new Button(image2P, image2PSelected, false, 110, 110, width-140, 60);
-  buttonEasy = new Button(easy, easySelected, true, 110, 110, width-280, 190);
-  buttonHard = new Button(hard, hardSelected, false, 110, 110, width-140, 190);
-  buttonStart = new Button(start, null, false, 190, 110, width-245, 320);
+  button1P = new Button(image1P, image1PSelected, false, 110, 100, width-280, 75);
+  button2P = new Button(image2P, image2PSelected, false, 110, 110, width-140, 70);
+  buttonEasy = new Button(easy, easySelected, true, 110, 110, width-280, 200);
+  buttonHard = new Button(hard, hardSelected, false, 110, 110, width-140, 200);
+  buttonStart = new Button(start, null, false, 190, 110, width-245, 330);
   buttonQuit = new Button(exit, null, false, 190, 110, width-245, 450);
   buttonRestart = new Button(restart, null, false, 180, 100, width/2-180-10, height/2-10);
   buttonMainMenu = new Button(exit, null, false, 180, 100, width/2+10, height/2-10);
   
   arial = loadFont("Arial-BoldMT-48.vlw");
   duneFont = loadFont("Dune_Rise-48.vlw");
+  arialSmall = loadFont("ArialMT-16.vlw");
   
   wormEat = new SoundFile(this, "wormeat.mp3");
   bkgMusic = new SoundFile(this, "desert_background_music.mp3");
@@ -125,6 +125,8 @@ void mousePressed() {
       else gc.startGame2P(buttonEasy.selected ? true : false);
     } else if (buttonQuit.checkPressed()) {
       exit();
+    } else if (mouseX > width-125 && mouseX < width-10 && mouseY > 5 && mouseY < 36) {
+      gc.gameState = GameState.MAN1;
     }
   } else if (gc.gameState == GameState.WIN ||
     gc.gameState == GameState.LOSS ||
@@ -141,6 +143,8 @@ void mousePressed() {
        buttonEasy.setSelected(true);
        buttonHard.setSelected(false);
      }
+  } else if (gc.gameState == GameState.MAN1 || gc.gameState == GameState.MAN2 || gc.gameState == GameState.MAN3) {
+    gc.checkManualControlPressed();
   }
 }
 
