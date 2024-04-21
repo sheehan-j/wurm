@@ -152,6 +152,7 @@ class GameController {
     fill(255);
   }
 
+  // Displays the manual screen and appropriate text based on the current gameState (MAN1, MAN2, etc. represent the current page)
   void displayManual() {
     image(background, 0, 0);
     fill(235, 215, 170);
@@ -238,6 +239,7 @@ class GameController {
     }
   }
   
+  // Checks whether the mouse is currently positioned over the "Back" or "Next" buttons on the manual pages
   void checkManualControlPressed() {
     if (mouseX > 85-50 && mouseX < 85+50 && mouseY > height-50-15 && mouseY < height-50+15) {
       if (gameState == GameState.MAN5) gameState = GameState.MAN4;
