@@ -10,7 +10,7 @@ Harvester harvester;
 PImage background, image1P, image1PSelected, image2P, image2PSelected, titleText, sand;
 PImage easy, hard, easySelected, hardSelected;
 PImage start, exit, restart;
-PImage gamebackground, gobackground;
+PImage gamebackground;
 PImage headLeft, headRight, headUp, headDown;
 PImage bodyLeft, bodyRight, bodyUp, bodyDown;
 PImage tailLeft, tailRight, tailUp, tailDown;
@@ -47,7 +47,6 @@ void setup() {
   restart = loadImage("restart.png");
   
   gamebackground = loadImage("gamebackground.png");
-  gobackground =  loadImage("gameoverbackground.png");
   
   headUp = loadImage("wormheadup.png");
   headLeft = loadImage("wormheadleft.png");
